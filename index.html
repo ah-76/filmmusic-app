@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>FilmMusic.App</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Reset and Box-Sizing */
-      html, body {
+      html,
+      body {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -39,7 +43,7 @@
 
       /* Background Image Fade-In */
       body::before {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         left: 0;
@@ -70,12 +74,12 @@
         transform: translate(-50%, -50%);
         display: grid;
         grid-template-columns: repeat(4, 1fr); /* 4 columns for FILM */
-        grid-template-rows: repeat(5, 1fr);    /* 5 rows to allow vertical MUSIC */
+        grid-template-rows: repeat(5, 1fr); /* 5 rows for vertical MUSIC */
         gap: 10px;
         font-size: 90px;
         text-align: center;
         transition: opacity 2s ease;
-         
+
         /* Prevent text selection */
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -85,8 +89,8 @@
         -webkit-tap-highlight-color: transparent;
       }
 
-      .grid:hover { 
-        cursor: pointer; 
+      .grid:hover {
+        cursor: pointer;
       }
 
       /* Letters in the Grid */
@@ -119,30 +123,62 @@
       }
 
       /* Horizontal FILM Letters */
-      .film-f { grid-column: 1; grid-row: 1; }
-      .film-i { grid-column: 2; grid-row: 1; }
-      .film-l { grid-column: 3; grid-row: 1; }
-      .film-m { grid-column: 4; grid-row: 1; }
+      .film-f {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .film-i {
+        grid-column: 2;
+        grid-row: 1;
+      }
+      .film-l {
+        grid-column: 3;
+        grid-row: 1;
+      }
+      .film-m {
+        grid-column: 4;
+        grid-row: 1;
+      }
 
-      /* Vertical MUSIC Letters */
-      /* The "M" is shared with FILM so it is hidden in the vertical sequence */
-      .music-m { grid-column: 4; grid-row: 1; display: none; }
-      .music-u { grid-column: 4; grid-row: 2; color: rgba(118, 93, 105, 0.8); }
-      .music-s { grid-column: 4; grid-row: 3; color: rgba(118, 93, 105, 0.8); }
-      .music-i { grid-column: 4; grid-row: 4; color: rgba(118, 93, 105, 0.8); }
-      .music-c { grid-column: 4; grid-row: 5; color: rgba(118, 93, 105, 0.8); }
+      /* Vertical MUSIC Letters (the first "M" is hidden, since it's shared) */
+      .music-m {
+        grid-column: 4;
+        grid-row: 1;
+        display: none;
+      }
+      .music-u {
+        grid-column: 4;
+        grid-row: 2;
+        color: rgba(118, 93, 105, 0.8);
+      }
+      .music-s {
+        grid-column: 4;
+        grid-row: 3;
+        color: rgba(118, 93, 105, 0.8);
+      }
+      .music-i {
+        grid-column: 4;
+        grid-row: 4;
+        color: rgba(118, 93, 105, 0.8);
+      }
+      .music-c {
+        grid-column: 4;
+        grid-row: 5;
+        color: rgba(118, 93, 105, 0.8);
+      }
 
       /* Topics List Styling (Company List) */
       #company-list {
         position: fixed;
-        left: 50px; /* 50px from the left edge */
-        margin-top: 50px; 
+        left: 50px;
+        margin-top: 50px;
         text-align: left;
         font-size: 32px;
-        color: rgba(220,220,220, 0.9);
+        color: rgba(220,220,220,0.9);
         opacity: 0;
         transition: opacity 3s ease 1.5s;
         z-index: 1;
+
         /* Prevent text selection */
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -174,7 +210,7 @@
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%); 
+        transform: translate(-50%, -50%);
         padding: 1rem 1.5rem;
         background: rgba(17, 17, 17, 0.95);
         color: rgba(220, 220, 220, 0.9);
@@ -219,7 +255,7 @@
         right: 50px;
         bottom: 50px;
         display: grid;
-        grid-template-columns: 1fr 3fr; /* Left column: 1/4, Right column: 3/4 */
+        grid-template-columns: 1fr 3fr; /* 1/4 + 3/4 */
         gap: 20px;
         background: rgba(17, 17, 17, 0.95);
         color: rgba(220, 220, 220, 0.9);
@@ -228,16 +264,31 @@
         opacity: 0;
         transition: opacity 2s ease;
         overflow-y: auto;
-        z-index: 1;
+        z-index: 2; /* higher than company-list (which was z-index:1) */
       }
-
       #topic-display .left-column {
         border-right: 1px solid rgba(220, 220, 220, 0.3);
         padding-right: 20px;
+        position: relative;
       }
-
       #topic-display .right-column {
         padding-left: 20px;
+      }
+
+      /* (Optional) Style the Back button */
+      .back-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: none;
+        border: none;
+        color: #ccc;
+        font-size: 1.3rem;
+        cursor: pointer;
+        padding: 0.2em 0.5em;
+      }
+      .back-button:hover {
+        color: #fff;
       }
 
       /* Mobile Responsiveness */
@@ -275,7 +326,7 @@
       <div class="letter film-i">I</div>
       <div class="letter film-l">L</div>
       <div class="letter film-m">M</div>
-      
+
       <!-- Vertical MUSIC Letters (with duplicate "M" hidden) -->
       <div class="letter music-m">M</div>
       <div class="letter music-u">U</div>
@@ -285,40 +336,99 @@
     </div>
 
     <script>
-      // Track if the logo has been clicked (and faded out)
+      // ----------------- GLOBAL VARIABLES -----------------
       let logoClicked = false;
       const grid = document.querySelector('.grid');
-      let companyList;
-
-      // Audio Control
       const audio = document.getElementById('background-music');
-      audio.volume = 0; // Start with volume at 0 for fade-in
+      audio.volume = 0;
       audio.loop = false;
 
-      /**
-       * Fade in audio over the given duration (ms)
-       */
-      function fadeIn(audio, duration) {
+      // We store companies and tooltips here so we can re-use them.
+      const tooltips = {
+        ghostly:
+          'Witness the birth of cinema: a journey from terrifying novelty to structured experience, as live music transformed the shock of moving images.',
+        scoring:
+          'The intimate partnership between composer & director - vision, workflows, communication, collaboration.',
+        operatic:
+          'Discover how Star Wars revitalized the power of Wagnerian music-drama.',
+        intertextual:
+          'Explore how Die Hard used musical existing snippets - from Beethoven to pop songs - to celebrate an anti-hero.',
+        xfiles:
+          'Learn how The X-Files uniquely imported cinematic techniques, melding sound-design with score into a single tapestry.',
+        heat:
+          'Survey the postmodern musical landscape of polar opposites, loneliness, and obsession in Heat.',
+        texture:
+          'Uncover how American Beauty created a radically new, minimalist-imagistic mode of filmscoring.'
+      };
+
+      const companies = [
+        ['ghostly', 'Ghostly Beginnings'],
+        ['scoring', 'Vision & Score: Composer & Director'],
+        ['operatic', 'Operatic Cinema: Star Wars'],
+        ['intertextual', 'Playful Subversion: Die Hard'],
+        ['xfiles', 'Cinematic Series: The X-Files'],
+        ['heat', 'Urban Obsession: Heat'],
+        ['texture', 'Suspended Textures: American Beauty']
+      ];
+
+      // Content for the 2-column display
+      const topicContent = {
+        ghostly: {
+          subheadings: ['Background', 'Key Moments', 'Influence'],
+          content: `<p><strong>Ghostly Beginnings:</strong> 
+            Witness the birth of cinema as live music transformed moving images into a thrilling experience.</p>`
+        },
+        scoring: {
+          subheadings: ['Collaboration', 'Workflow', 'Innovation'],
+          content: `<p><strong>Vision & Score:</strong> 
+            Explore the intimate collaboration between composer and director, and how their synergy creates unforgettable film moments.</p>`
+        },
+        operatic: {
+          subheadings: ['Dramatic Themes', 'Musical Influences'],
+          content: `<p><strong>Operatic Cinema:</strong>
+            Discover how the epic spirit of Wagnerian drama found a new home in cinematic storytelling through films like Star Wars.</p>`
+        },
+        intertextual: {
+          subheadings: ['Cultural References', 'Subversion'],
+          content: `<p><strong>Playful Subversion:</strong>
+            Delve into the use of pre-existing musical snippets and cultural references that enrich films like Die Hard.</p>`
+        },
+        xfiles: {
+          subheadings: ['Mystery', 'Atmosphere'],
+          content: `<p><strong>Cinematic Series:</strong>
+            Learn how The X-Files fused sound-design and scoring to create an otherworldly atmosphere.</p>`
+        },
+        heat: {
+          subheadings: ['Urban Tension', 'Psychological Depth'],
+          content: `<p><strong>Urban Obsession:</strong> 
+            Analyze the film Heat and its postmodern take on loneliness and obsession through music.</p>`
+        },
+        texture: {
+          subheadings: ['Minimalism', 'Imagery'],
+          content: `<p><strong>Suspended Textures:</strong> 
+            Uncover the minimalist and imagistic techniques used in American Beauty to shape its unique musical narrative.</p>`
+        }
+      };
+
+      // ----------------- AUDIO FADE LOGIC -----------------
+      function fadeIn(audioEl, duration) {
         const interval = 50;
         const increment = interval / duration;
         const fadeInInterval = setInterval(() => {
-          if (audio.volume < 1) {
-            audio.volume = Math.min(audio.volume + increment, 1);
+          if (audioEl.volume < 1) {
+            audioEl.volume = Math.min(audioEl.volume + increment, 1);
           } else {
             clearInterval(fadeInInterval);
           }
         }, interval);
       }
 
-      /**
-       * Fade out audio over the given duration (ms)
-       */
-      function fadeOut(audio, duration, callback) {
+      function fadeOut(audioEl, duration, callback) {
         const interval = 50;
         const decrement = interval / duration;
         const fadeOutInterval = setInterval(() => {
-          if (audio.volume > 0) {
-            audio.volume = Math.max(audio.volume - decrement, 0);
+          if (audioEl.volume > 0) {
+            audioEl.volume = Math.max(audioEl.volume - decrement, 0);
           } else {
             clearInterval(fadeOutInterval);
             if (callback) callback();
@@ -326,171 +436,111 @@
         }, interval);
       }
 
-      /**
-       * Plays the audio with fade-in and handles fade-out before looping.
-       */
       function playWithFade() {
         audio.currentTime = 0;
         const playPromise = audio.play();
-
         if (playPromise !== undefined) {
-          playPromise.then(() => {
-            fadeIn(audio, 4000); // Fade in over 4 seconds
-
-            // Listen for timeupdate to trigger fade-out 4 seconds before the end
-            audio.addEventListener('timeupdate', function handleFadeOut() {
-              if (audio.duration - audio.currentTime <= 4) {
-                fadeOut(audio, 4000, () => {
-                  audio.pause();
-                  playWithFade(); // Restart audio after fade-out
-                });
-                audio.removeEventListener('timeupdate', handleFadeOut);
-              }
+          playPromise
+            .then(() => {
+              fadeIn(audio, 4000); // fade in over 4 sec
+              audio.addEventListener('timeupdate', function handleFadeOut() {
+                if (audio.duration - audio.currentTime <= 4) {
+                  fadeOut(audio, 4000, () => {
+                    audio.pause();
+                    playWithFade(); // loop after fade-out
+                  });
+                  audio.removeEventListener('timeupdate', handleFadeOut);
+                }
+              });
+            })
+            .catch((err) => {
+              console.warn('Autoplay prevented:', err);
             });
-          }).catch(error => {
-            console.warn('Autoplay was prevented.', error);
-          });
         }
       }
 
-      /**
-       * Global click listener to start audio playback on the user's first click.
-       */
-      document.addEventListener('click', () => {
-        playWithFade();
-      }, { once: true });
+      // Start audio on first user click anywhere
+      document.addEventListener(
+        'click',
+        () => {
+          playWithFade();
+        },
+        { once: true }
+      );
+
+      // ----------------- COMPANY LIST LOGIC -----------------
 
       /**
-       * Logo click: Fade out the logo and then show the topics list.
+       * Create the company list in the DOM, fade it in, 
+       * and attach click listeners for each item.
        */
-      grid.addEventListener('click', () => {
-        if (!logoClicked) {
-          // Fade out the logo (grid)
-          grid.style.transition = "opacity 2s ease";
-          grid.style.opacity = "0";
-          setTimeout(() => {
-            grid.style.display = "none";
-          }, 2000);
-          logoClicked = true;
+      function showCompanyList() {
+        // Create company-list container
+        const companyList = document.createElement('div');
+        companyList.id = 'company-list';
 
-          // Tooltip Texts for the Topics List
-          const tooltips = {
-            'ghostly': 'Witness the birth of cinema: a journey from terrifying novelty to structured experience, as live music transformed the shock of moving images.',
-            'scoring': 'The intimate partnership between composer & director - vision, workflows, communication, collaboration.',
-            'operatic': 'Discover how Star Wars revitalized the power of Wagnerian music-drama.',
-            'intertextual': 'Explore how Die Hard used musical existing snippets - from Beethoven to pop songs - to celebrate an anti-hero.',
-            'xfiles': 'Learn how The X-Files uniquely imported cinematic techniques, melding sound-design with score into a single tapestry.',
-            'heat': 'Survey the postmodern musical landscape of polar opposites, loneliness, and obsession in Heat.',
-            'texture': 'Uncover how American Beauty created a radically new, minimalist-imagistic mode of filmscoring.'
-          };
-
-          // Create Topics List (Company List)
-          companyList = document.createElement('div');
-          companyList.id = 'company-list';
-          
-          // Define Topics (Companies) with a key and display name
-          const companies = [
-            ['ghostly', 'Ghostly Beginnings'],
-            ['scoring', 'Vision & Score: Composer & Director'],
-            ['operatic', 'Operatic Cinema: Star Wars'], 
-            ['intertextual', 'Playful Subversion: Die Hard'],
-            ['xfiles', 'Cinematic Series: The X-Files'],
-            ['heat', 'Urban Obsession: Heat'],
-            ['texture', 'Suspended Textures: American Beauty']
-          ];
-
-          // Populate Topics List with Tooltips and include a data attribute for each topic key
-          companyList.innerHTML = companies.map(([key, name]) => `
+        // Populate
+        companyList.innerHTML = companies
+          .map(
+            ([key, name]) => `
             <div class="tooltip-container" data-topic="${key}">
               <div>${name}</div>
               <span class="tooltip">${tooltips[key]}</span>
             </div>
-          `).join('<br><br>');
+          `
+          )
+          .join('<br><br>');
 
-          // Append the Topics List to the Body and fade it in
-          document.body.appendChild(companyList);
-          setTimeout(() => {
-            companyList.style.opacity = '1';
-          }, 50);
+        // Add to body
+        document.body.appendChild(companyList);
 
-          // Add click event listeners for each topic item
-          const topicItems = companyList.querySelectorAll('.tooltip-container');
-          topicItems.forEach(item => {
-            item.addEventListener('click', () => {
-              const topicKey = item.getAttribute('data-topic');
-              // Fade out the companyList
-              companyList.style.transition = "opacity 2s ease";
-              companyList.style.opacity = "0";
-              setTimeout(() => {
-                companyList.remove();
-              }, 2000);
+        // Fade in
+        requestAnimationFrame(() => {
+          companyList.style.opacity = '1';
+        });
 
-              // Show the selected topic using a two-column layout
-              showTopicDisplay(topicKey);
-            });
+        // Attach item click listeners
+        const topicItems = companyList.querySelectorAll('.tooltip-container');
+        topicItems.forEach((item) => {
+          item.addEventListener('click', () => {
+            const topicKey = item.getAttribute('data-topic');
+            // Fade out the companyList
+            companyList.style.transition = 'opacity 2s ease';
+            companyList.style.opacity = '0';
+            setTimeout(() => {
+              companyList.remove();
+            }, 2000);
+
+            // Show the selected topic using a two-column layout
+            showTopicDisplay(topicKey);
           });
-        }
-      });
+        });
+      }
 
-      /**
-       * Define content for each topic. You can extend these objects with additional HTML, subheadings, etc.
-       */
-      const topicContent = {
-        'ghostly': {
-          subheadings: ['Background', 'Key Moments', 'Influence'],
-          content: `<p><strong>Ghostly Beginnings:</strong> Witness the birth of cinema as live music transformed moving images into a thrilling experience.</p>`
-        },
-        'scoring': {
-          subheadings: ['Collaboration', 'Workflow', 'Innovation'],
-          content: `<p><strong>Vision & Score:</strong> Explore the intimate collaboration between composer and director, and how their synergy creates unforgettable film moments.</p>`
-        },
-        'operatic': {
-          subheadings: ['Dramatic Themes', 'Musical Influences'],
-          content: `<p><strong>Operatic Cinema:</strong> Discover how the epic spirit of Wagnerian drama found a new home in cinematic storytelling through films like Star Wars.</p>`
-        },
-        'intertextual': {
-          subheadings: ['Cultural References', 'Subversion'],
-          content: `<p><strong>Playful Subversion:</strong> Delve into the use of pre-existing musical snippets and cultural references that enrich films like Die Hard.</p>`
-        },
-        'xfiles': {
-          subheadings: ['Mystery', 'Atmosphere'],
-          content: `<p><strong>Cinematic Series:</strong> Learn how The X-Files fused sound-design and scoring to create an otherworldly atmosphere.</p>`
-        },
-        'heat': {
-          subheadings: ['Urban Tension', 'Psychological Depth'],
-          content: `<p><strong>Urban Obsession:</strong> Analyze the film Heat and its postmodern take on loneliness and obsession through music.</p>`
-        },
-        'texture': {
-          subheadings: ['Minimalism', 'Imagery'],
-          content: `<p><strong>Suspended Textures:</strong> Uncover the minimalist and imagistic techniques used in American Beauty to shape its unique musical narrative.</p>`
-        }
-      };
-
-      /**
-       * Function to display the selected topic in a 2-column layout.
-       */
+      // ----------------- TOPIC DISPLAY (2-COLUMN) LOGIC -----------------
       function showTopicDisplay(topicKey) {
-        // Create the container for topic display
         const topicDisplay = document.createElement('div');
         topicDisplay.id = 'topic-display';
 
-        // Retrieve the content for the chosen topic
-        const contentData = topicContent[topicKey];
+        const data = topicContent[topicKey] || {};
+        const leftColumnHTML = `
+          <!-- The BACK button goes here -->
+          <button class="back-button" id="back-button">&#x2190; Back</button>
+          <h2>${topicKey.toUpperCase()}</h2>
+          ${
+            data.subheadings
+              ? `<ul>${data.subheadings
+                  .map((sh) => `<li>${sh}</li>`)
+                  .join('')}</ul>`
+              : '<p>No subheadings available.</p>'
+          }
+        `;
 
-        // Build the left column HTML (subheadings) and right column HTML (detailed content)
-        let leftColumnHTML = `<h2>${topicKey.toUpperCase()}</h2>`;
-        if (contentData && contentData.subheadings) {
-          leftColumnHTML += '<ul>';
-          contentData.subheadings.forEach(sub => {
-            leftColumnHTML += `<li>${sub}</li>`;
-          });
-          leftColumnHTML += '</ul>';
-        } else {
-          leftColumnHTML += '<p>No subheadings available.</p>';
-        }
+        const rightColumnHTML = data.content
+          ? data.content
+          : '<p>No content available.</p>';
 
-        let rightColumnHTML = contentData && contentData.content ? contentData.content : '<p>No content available.</p>';
-
+        // Build the 2-column layout
         topicDisplay.innerHTML = `
           <div class="left-column">
             ${leftColumnHTML}
@@ -500,34 +550,58 @@
           </div>
         `;
 
-        // Append the topic display to the body and fade it in
+        // Add to the DOM
         document.body.appendChild(topicDisplay);
-        setTimeout(() => {
+
+        // Fade in
+        requestAnimationFrame(() => {
           topicDisplay.style.opacity = '1';
-        }, 50);
+        });
+
+        // ---- ADD EVENT LISTENER FOR BACK BUTTON ----
+        const backButton = topicDisplay.querySelector('#back-button');
+        backButton.addEventListener('click', () => {
+          // Fade out the 2-column container
+          topicDisplay.style.opacity = '0';
+          setTimeout(() => {
+            topicDisplay.remove();
+            // Re-show the company list after removing
+            showCompanyList();
+          }, 1500);
+        });
       }
 
-      /**
-       * Set random animation delays for grid letters.
-       */
-      const letters = document.querySelectorAll('.letter');
-      letters.forEach(letter => {
-        const randomDelayMs = Math.random() * 4500 + 1000; // Between 1000ms and 5500ms
-        const randomDelaySeconds = randomDelayMs / 1000;
-        letter.style.animationDelay = `${randomDelaySeconds}s`;
+      // ----------------- LOGO (GRID) CLICK -----------------
+      grid.addEventListener('click', () => {
+        if (!logoClicked) {
+          logoClicked = true;
+          // Fade out the logo
+          grid.style.transition = 'opacity 2s ease';
+          grid.style.opacity = '0';
+          setTimeout(() => {
+            grid.style.display = 'none';
+          }, 2000);
+
+          // After the grid is clicked/faded, show the list
+          showCompanyList();
+        }
       });
 
-      /**
-       * Update viewport height for mobile responsiveness.
-       */
+      // ----------------- ANIMATE LETTERS RANDOMLY -----------------
+      const letters = document.querySelectorAll('.letter');
+      letters.forEach((letter) => {
+        const randomDelayMs = Math.random() * 4500 + 1000; // 1s -> 5.5s
+        const randomDelaySec = randomDelayMs / 1000;
+        letter.style.animationDelay = `${randomDelaySec}s`;
+      });
+
+      // ----------------- MOBILE VIEWPORT FIX -----------------
       function updateViewportHeight() {
         const vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       }
-
-      // Update viewport height on page load and on window resize
-      updateViewportHeight();
       window.addEventListener('resize', updateViewportHeight);
+      updateViewportHeight();
     </script>
   </body>
 </html>
