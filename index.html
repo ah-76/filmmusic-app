@@ -8,6 +8,8 @@
       href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
     <style>
       /* Reset and Box-Sizing */
       html,
@@ -528,7 +530,10 @@
         const data = topicContent[topicKey] || {};
         const leftColumnHTML = `
           <!-- The BACK button goes here -->
-          <button class="back-button" id="back-button">&#x2190; Back</button>
+          <button class="back-button" id="back-button">
+  <span class="material-icons">arrow_back</span>
+</button>
+
           <h2>${topicKey.toUpperCase()}</h2>
           ${
             data.subheadings
