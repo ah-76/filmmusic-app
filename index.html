@@ -62,7 +62,7 @@
         }
       }
 
-      /* Grid Layout */
+      /* Grid Layout for the Logo */
       .grid {
         position: fixed;
         top: 50%;
@@ -74,7 +74,7 @@
         gap: 10px;
         font-size: 90px;
         text-align: center;
-        transition: all 2s ease;
+        transition: opacity 2s ease;
         transform-origin: top left;
 
         /* Prevent text selection */
@@ -88,21 +88,6 @@
 
       .grid:hover { 
         cursor: pointer; 
-      }
-
-      .grid.move-top-left {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        transform: scale(0.5);
-        margin: 0;
-        padding: 0;
-        transform-origin: top left;
-      }
-
-      body.grid-moved {
-        justify-content: initial;
-        align-items: initial;
       }
 
       /* Letters in the Grid */
@@ -148,13 +133,13 @@
       .music-i { grid-column: 4; grid-row: 5; color: rgba(118, 93, 105, 0.8); }
       .music-c { grid-column: 4; grid-row: 6; color: rgba(118, 93, 105, 0.8); }
 
-      /* Company List Styling */
+      /* Topics List Styling (Company List) */
       #company-list {
         position: fixed;
         top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
+        left: 50px; /* 50px from the left edge */
+        transform: translateY(-50%);
+        text-align: left;
         font-size: 32px;
         color: rgba(85, 107, 47, 0.9);
         opacity: 0;
@@ -274,8 +259,8 @@
     </div>
 
     <script>
-      // Track the state of the grid
-      let gridMoved = false;
+      // Track if the logo has been clicked (and faded out)
+      let logoClicked = false;
       const grid = document.querySelector('.grid');
       let companyList;
 
@@ -343,23 +328,26 @@
       }
 
       /**
-       * Global click listener to start audio playback on first click.
+       * Global click listener to start audio playback on the user's first click.
        */
       document.addEventListener('click', () => {
         playWithFade();
       }, { once: true });
 
       /**
-       * Grid movement and company list toggle on click.
+       * Logo click: Fade out the logo in place and then show the topics list.
        */
       grid.addEventListener('click', () => {
-        if (!gridMoved) {
-          // Move grid to top-left
-          document.body.classList.add('grid-moved');
-          grid.classList.add('move-top-left');
-          gridMoved = true;
+        if (!logoClicked) {
+          // Fade out the logo (grid) in place
+          grid.style.transition = "opacity 2s ease";
+          grid.style.opacity = "0";
+          setTimeout(() => {
+            grid.style.display = "none";
+          }, 2000);
+          logoClicked = true;
 
-          // Tooltip Texts
+          // Tooltip Texts for the Topics List
           const tooltips = {
             'ghostly': 'Witness the birth of cinema: a journey from terrifying novelty to structured experience, as live music transformed the shock of moving images.',
             'scoring': 'The intimate partnership between composer & director - vision, workflows, communication, collaboration.',
@@ -370,11 +358,11 @@
             'texture': 'Uncover how American Beauty created a radically new, minimalist-imagistic mode of filmscoring.'
           };
 
-          // Create Company List
+          // Create Topics List (Company List)
           companyList = document.createElement('div');
           companyList.id = 'company-list';
           
-          // Define Companies
+          // Define Topics (Companies)
           const companies = [
             ['ghostly', 'Ghostly Beginnings'],
             ['scoring', 'Vision & Score: Composer & Director'],
@@ -385,7 +373,7 @@
             ['texture', 'Suspended Textures: American Beauty']
           ];
 
-          // Populate Company List with Tooltips
+          // Populate Topics List with Tooltips
           companyList.innerHTML = companies.map(([key, name]) => `
             <div class="tooltip-container">
               <div>${name}</div>
@@ -393,30 +381,13 @@
             </div>
           `).join('<br><br>');
 
-          // Append Company List to Body
+          // Append the Topics List to the Body
           document.body.appendChild(companyList);
 
-          // Trigger Fade-In for the Company List
+          // Trigger Fade-In for the Topics List
           setTimeout(() => {
             companyList.style.opacity = '1';
           }, 50);
-
-        } else {
-          // Move grid back to center
-          document.body.classList.remove('grid-moved');
-          grid.classList.remove('move-top-left');
-          gridMoved = false;
-
-          // Fade Out and Remove the Company List
-          if (companyList) {
-            companyList.style.opacity = '0';
-            companyList.style.transition = 'opacity 2s ease';
-            setTimeout(() => {
-              if (companyList.parentElement) {
-                companyList.parentElement.removeChild(companyList);
-              }
-            }, 2000);
-          }
         }
       });
 
