@@ -283,12 +283,17 @@
         line-height: 1.5;
         overflow-y: auto;
       }
-
+      
+/* The wrapper that contains the heading and list */
+.heading-wrapper {
+  /* push the heading down so it doesn't overlap the arrow */
+  margin-top: 80px; /* or any spacing you prefer */
+}
       /* (Optional) Style the Back button */
       .back-button {
         position: absolute;
-        top: 0 !important;
-        left: 0 !important;
+        top: 0;
+        left: 0;
         background: none;
         border: none;
         color: #ccc;
@@ -535,22 +540,24 @@
         topicDisplay.id = 'topic-display';
 
         const data = topicContent[topicKey] || {};
+        
         const leftColumnHTML = `
-          <!-- The BACK button goes here -->
-          <button class="back-button" id="back-button">
-  <span class="material-icons">keyboard_backspace</span>
-</button>
-<p></p>
-  <p></p>
-          <h2>${topicKey.toUpperCase()}</h2>
-          ${
-            data.subheadings
-              ? `<ul>${data.subheadings
-                  .map((sh) => `<li>${sh}</li>`)
-                  .join('')}</ul>`
-              : '<p>No subheadings available.</p>'
-          }
-        `;
+  <!-- The BACK button goes here -->
+  <button class="back-button" id="back-button">
+    <span class="material-icons">keyboard_backspace</span>
+  </button>
+
+  <!-- Wrap your heading + list in a separate div -->
+  <div class="heading-wrapper">
+    <h2>${topicKey.toUpperCase()}</h2>
+    ${
+      data.subheadings
+        ? `<ul>${data.subheadings.map((sh) => `<li>${sh}</li>`).join('')}</ul>`
+        : '<p>No subheadings available.</p>'
+    }
+  </div>
+`;
+
 
         const rightColumnHTML = data.content
           ? data.content
