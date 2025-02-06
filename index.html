@@ -70,12 +70,12 @@
         transform: translate(-50%, -50%);
         display: grid;
         grid-template-columns: repeat(4, 1fr); /* 4 columns for FILM */
-        grid-template-rows: repeat(6, 1fr);    /* 6 rows to allow vertical MUSIC */
+        grid-template-rows: repeat(5, 1fr);    /* 5 rows to allow vertical MUSIC */
         gap: 10px;
         font-size: 90px;
         text-align: center;
         transition: opacity 2s ease;
-        transform-origin: top left;
+         
 
         /* Prevent text selection */
         -webkit-user-select: none;
@@ -120,18 +120,18 @@
       }
 
       /* Horizontal FILM Letters */
-      .film-f { grid-column: 1; grid-row: 2; }
-      .film-i { grid-column: 2; grid-row: 2; }
-      .film-l { grid-column: 3; grid-row: 2; }
-      .film-m { grid-column: 4; grid-row: 2; }
+      .film-f { grid-column: 1; grid-row: 1; }
+      .film-i { grid-column: 2; grid-row: 1; }
+      .film-l { grid-column: 3; grid-row: 1; }
+      .film-m { grid-column: 4; grid-row: 1; }
 
       /* Vertical MUSIC Letters */
       /* The "M" is shared with FILM so it is hidden in the vertical sequence */
-      .music-m { grid-column: 4; grid-row: 2; display: none; }
-      .music-u { grid-column: 4; grid-row: 3; color: rgba(118, 93, 105, 0.8); }
-      .music-s { grid-column: 4; grid-row: 4; color: rgba(118, 93, 105, 0.8); }
-      .music-i { grid-column: 4; grid-row: 5; color: rgba(118, 93, 105, 0.8); }
-      .music-c { grid-column: 4; grid-row: 6; color: rgba(118, 93, 105, 0.8); }
+      .music-m { grid-column: 4; grid-row: 1; display: none; }
+      .music-u { grid-column: 4; grid-row: 2; color: rgba(118, 93, 105, 0.8); }
+      .music-s { grid-column: 4; grid-row: 3; color: rgba(118, 93, 105, 0.8); }
+      .music-i { grid-column: 4; grid-row: 4; color: rgba(118, 93, 105, 0.8); }
+      .music-c { grid-column: 4; grid-row: 5; color: rgba(118, 93, 105, 0.8); }
 
       /* Topics List Styling (Company List) */
       #company-list {
