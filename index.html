@@ -1,300 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>FILM MUSIC</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
-  <style>
-    /* ===============================
-       RESET & BASIC BODY STYLES
-       =============================== */
-    html, body {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      position: relative;
-      background-color: #111;
-      color: #777;
-      font-weight: 200;
-      min-height: calc(var(--vh, 1vh) * 100);
-      line-height: 1;
-      font-family: 'Dosis', serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow: hidden;
-
-      /* Prevent text selection */
-      -webkit-user-select: none; 
-      -moz-user-select: none;    
-      -ms-user-select: none;     
-      user-select: none;         
-      -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent;
-
-      /* Prevent double-tap zoom on mobile */
-      touch-action: manipulation;
-    }
-
-    /* ===============================
-       BACKGROUND IMAGE FADE
-       =============================== */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('r1.jpg'); /* your background */
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
-      z-index: -1;
-      animation: fadeInBackground 3s forwards;
-    }
-
-    @keyframes fadeInBackground {
-      from { opacity: 0; }
-      to   { opacity: 0.1; }
-    }
-
-    /* ===============================
-       GRID LAYOUT
-       (Expanded to 5 rows to fit "MUSIC")
-       =============================== */
-    .grid {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: grid;
-      /* We keep 7 columns as before, but now 5 rows. */
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(5, 1fr);
-      gap: 10px;
-      font-size: 90px;
-      text-align: center;
-      transition: all 2s ease;
-      transform-origin: top left;
-
-      /* Prevent text selection */
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .grid:hover { 
-      cursor: pointer; 
-    }
-
-    /* When moved top-left */
-    .grid.move-top-left {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      transform: scale(0.5);
-      margin: 0;
-      padding: 0;
-      transform-origin: top left;
-    }
-
-    body.grid-moved {
-      justify-content: initial;
-      align-items: initial;
-    }
-
-    /* ===============================
-       LETTERS INSIDE THE GRID
-       =============================== */
-    .letter {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      filter: blur(5px);
-      animation: fadeIn 3s forwards;
-
-      /* Prevent text selection */
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        filter: blur(5px);
+  <head>
+    <meta charset="UTF-8">
+    <title>FilmMusic.App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <style>
+      /* Reset and Box-Sizing */
+      html, body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      to {
-        opacity: 1;
-        filter: blur(0);
-      }
-    }
 
-    /* ===============================
-       MUSIC (Vertical)
-       Using new .music-* classes
-       =============================== */
-    .music-m {
-      grid-column: 5;
-      grid-row: 1; 
-      color: rgba(118, 93, 105, 0.8); /* optional */
-    }
-    /* This letter is exactly where the Redwood HOPE code used to
-       hide the "O" in row2 col5. We'll use it to hide our second "M"
-       so the single overlapping M is actually the FILM 'M' below. */
-    .music-u {
-      grid-column: 5;
-      grid-row: 2;
-      display: none; /* hidden so that only one M appears below */
-      color: rgba(118, 93, 105, 0.8);
-    }
-    .music-s {
-      grid-column: 5;
-      grid-row: 3;
-      color: rgba(118, 93, 105, 0.8);
-    }
-    .music-i {
-      grid-column: 5;
-      grid-row: 4;
-      color: rgba(118, 93, 105, 0.8);
-    }
-    /* For the fifth letter 'C', we added a 5th row above. */
-    .music-c {
-      grid-column: 5;
-      grid-row: 5;
-      color: rgba(118, 93, 105, 0.8);
-    }
+      /* Body Styling */
+      body {
+        margin: 0;
+        padding: 0;
+        position: relative;
+        background-color: #111;
+        color: #777;
+        font-weight: 200;
+        min-height: calc(var(--vh, 1vh) * 100);
+        line-height: 1;
+        font-family: 'Dosis', serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow: hidden;
 
-    /* ===============================
-       FILM (Horizontal)
-       Using new .film-* classes
-       We'll place its 4th letter "M" in (col5, row2),
-       overlapping the hidden .music-u in that same cell.
-       =============================== */
-    .film-f {
-      grid-column: 1;
-      grid-row: 2;
-    }
-    .film-i {
-      grid-column: 2;
-      grid-row: 2;
-    }
-    .film-l {
-      grid-column: 3;
-      grid-row: 2;
-    }
-    /* Redwood used col5 for its 5th letter (“O”). We do the same, 
-       so that it lines up exactly with .music-u's cell. */
-    .film-m {
-      grid-column: 5;
-      grid-row: 2;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    /* ===============================
-       COMPANY LIST (unchanged)
-       =============================== */
-    #company-list {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-size: 35px;
-      color: rgba(85, 107, 47, 0.9);
-      opacity: 0;
-      transition: opacity 4s ease 1.5s;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* ===============================
-       TOOLTIP STYLES (unchanged)
-       =============================== */
-    .tooltip-container {
-      position: relative;
-      display: inline-block;
-      margin: 5px 0;
-      cursor: crosshair;
-      line-height: 0.8;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .tooltip {
-      position: absolute;
-      bottom: 75%;
-      left: 0;
-      transform: translateY(0) translateX(10px);
-      padding: 1rem 1.5rem;
-      background: rgba(17, 17, 17, 0.95);
-      color: rgba(119, 119, 119, 0.9);
-      border: 1px solid rgba(118, 93, 105, 0.3);
-      border-radius: 10px;
-      font-size: 20px;
-      width: 250px;
-      text-align: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 1s ease;
-      pointer-events: none;
-      font-weight: 300;
-      line-height: 1.4;
-      z-index: 1000;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-touch-callout: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .tooltip::after {
-      display: none;
-    }
-
-    .tooltip-container:hover .tooltip {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* ===============================
-       RESPONSIVE STYLES
-       =============================== */
-    @media (max-width: 768px) {
-      .grid {
-        font-size: 40px;
-      }
-      #company-list {
-        font-size: 25px;
-        line-height: 1.5;
-      }
-      .tooltip {
-        font-size: 14px;
-        width: 200px;
-      }
-      * {
+        /* Prevent text selection */
         -webkit-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
@@ -302,59 +36,259 @@
         -webkit-touch-callout: none;
         -webkit-tap-highlight-color: transparent;
       }
-    }
-  </style>
-</head>
 
-<body>
+      /* Background Image Fade-In */
+      body::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('r1.jpg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        z-index: -1;
+        animation: fadeInBackground 3s forwards;
+      }
 
-  <!-- AUDIO remains the same if you want it (just rename file if you like) -->
-  <audio id="background-music" src="forest.mp3" preload="auto"></audio>
+      @keyframes fadeInBackground {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 0.1;
+        }
+      }
 
-  <!-- ==============
-       LOGO GRID
-       ============== -->
-  <div class="grid">
-    <!-- MUSIC (Vertical) -->
-    <div class="letter music-m">M</div>
-    <div class="letter music-u">M</div> <!-- HIDDEN in CSS (display:none) -->
-    <div class="letter music-s">S</div>
-    <div class="letter music-i">I</div>
-    <div class="letter music-c">C</div>
+      /* Grid Layout */
+      .grid {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 columns for FILM */
+        grid-template-rows: repeat(6, 1fr);    /* 6 rows to allow vertical MUSIC */
+        gap: 10px;
+        font-size: 90px;
+        text-align: center;
+        transition: all 2s ease;
+        transform-origin: top left;
 
-    <!-- FILM (Horizontal) -->
-    <div class="letter film-f">F</div>
-    <div class="letter film-i">I</div>
-    <div class="letter film-l">L</div>
-    <div class="letter film-m">M</div>
-  </div>
+        /* Prevent text selection */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
 
+      .grid:hover { 
+        cursor: pointer; 
+      }
 
+      .grid.move-top-left {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        transform: scale(0.5);
+        margin: 0;
+        padding: 0;
+        transform-origin: top left;
+      }
 
+      body.grid-moved {
+        justify-content: initial;
+        align-items: initial;
+      }
 
+      /* Letters in the Grid */
+      .letter {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        filter: blur(5px);
+        animation: fadeIn 3s forwards;
 
-	  
+        /* Prevent text selection */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          filter: blur(5px);
+        }
+        to {
+          opacity: 1;
+          filter: blur(0);
+        }
+      }
+
+      /* Horizontal FILM Letters */
+      .film-f { grid-column: 1; grid-row: 2; }
+      .film-i { grid-column: 2; grid-row: 2; }
+      .film-l { grid-column: 3; grid-row: 2; }
+      .film-m { grid-column: 4; grid-row: 2; }
+
+      /* Vertical MUSIC Letters */
+      /* The "M" is shared with FILM so it is hidden in the vertical sequence */
+      .music-m { grid-column: 4; grid-row: 2; display: none; }
+      .music-u { grid-column: 4; grid-row: 3; color: rgba(118, 93, 105, 0.8); }
+      .music-s { grid-column: 4; grid-row: 4; color: rgba(118, 93, 105, 0.8); }
+      .music-i { grid-column: 4; grid-row: 5; color: rgba(118, 93, 105, 0.8); }
+      .music-c { grid-column: 4; grid-row: 6; color: rgba(118, 93, 105, 0.8); }
+
+      /* Company List Styling */
+      #company-list {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        font-size: 35px;
+        color: rgba(85, 107, 47, 0.9);
+        opacity: 0;
+        transition: opacity 4s ease 1.5s;
+
+        /* Prevent text selection */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Tooltip Container */
+      .tooltip-container {
+        position: relative;
+        display: inline-block;
+        margin: 5px 0;
+        cursor: crosshair;
+        line-height: 0.8;
+
+        /* Prevent text selection */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Tooltip Styling */
+      .tooltip {
+        position: absolute;
+        bottom: 75%;
+        left: 0;
+        transform: translateY(0) translateX(10px);
+        padding: 1rem 1.5rem;
+        background: rgba(17, 17, 17, 0.95);
+        color: rgba(119, 119, 119, 0.9);
+        border: 1px solid rgba(118, 93, 105, 0.3);
+        border-radius: 10px;
+        font-size: 20px;
+        width: 250px;
+        text-align: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 1s ease;
+        pointer-events: none;
+        font-weight: 300;
+        line-height: 1.4;
+        z-index: 1000;
+
+        /* Prevent text selection */
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Tooltip Arrow (Hidden) */
+      .tooltip::after {
+        display: none;
+      }
+
+      /* Show Tooltip on Hover */
+      .tooltip-container:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .grid {
+          font-size: 40px;
+        }
+        #company-list {
+          font-size: 25px;
+          line-height: 1.5;
+        }
+        .tooltip {
+          font-size: 14px;
+          width: 200px;
+        }
+        * {
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          -webkit-touch-callout: none;
+          -webkit-tap-highlight-color: transparent;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Audio Element -->
+    <audio id="background-music" src="forest.mp3" preload="auto"></audio>
+
+    <!-- Logo Layout in a Grid -->
+    <div class="grid">
+      <!-- Horizontal FILM Letters (row 2) -->
+      <div class="letter film-f">F</div>
+      <div class="letter film-i">I</div>
+      <div class="letter film-l">L</div>
+      <div class="letter film-m">M</div>
+      
+      <!-- Vertical MUSIC Letters (sharing column 4) -->
+      <!-- The "M" is already shown via FILM so we hide the vertical duplicate -->
+      <div class="letter music-m">M</div>
+      <div class="letter music-u">U</div>
+      <div class="letter music-s">S</div>
+      <div class="letter music-i">I</div>
+      <div class="letter music-c">C</div>
+    </div>
+
     <script>
       // Track the state of the grid
       let gridMoved = false;
-
       const grid = document.querySelector('.grid');
       let companyList;
 
       // Audio Control
       const audio = document.getElementById('background-music');
-
-      // Initialize audio settings
       audio.volume = 0; // Start with volume at 0 for fade-in
-      audio.loop = false; // We'll handle looping manually
+      audio.loop = false;
 
       /**
-       * Fades in the audio over the specified duration.
-       * @param {HTMLAudioElement} audio - The audio element.
-       * @param {number} duration - Duration in milliseconds.
+       * Fade in audio over the given duration (ms)
        */
       function fadeIn(audio, duration) {
-        const interval = 50; // Interval time in ms
+        const interval = 50;
         const increment = interval / duration;
         const fadeInInterval = setInterval(() => {
           if (audio.volume < 1) {
@@ -366,13 +300,10 @@
       }
 
       /**
-       * Fades out the audio over the specified duration.
-       * @param {HTMLAudioElement} audio - The audio element.
-       * @param {number} duration - Duration in milliseconds.
-       * @param {Function} callback - Callback function after fade-out.
+       * Fade out audio over the given duration (ms)
        */
       function fadeOut(audio, duration, callback) {
-        const interval = 50; // Interval time in ms
+        const interval = 50;
         const decrement = interval / duration;
         const fadeOutInterval = setInterval(() => {
           if (audio.volume > 0) {
@@ -395,27 +326,24 @@
           playPromise.then(() => {
             fadeIn(audio, 4000); // Fade in over 4 seconds
 
-            // Listen for the 'timeupdate' event to trigger fade-out 4 seconds before the end
+            // Listen for timeupdate to trigger fade-out 4 seconds before the end
             audio.addEventListener('timeupdate', function handleFadeOut() {
               if (audio.duration - audio.currentTime <= 4) {
-                // Start fading out
                 fadeOut(audio, 4000, () => {
                   audio.pause();
-                  playWithFade(); // Restart the audio after fade-out
+                  playWithFade(); // Restart audio after fade-out
                 });
-                // Remove this event listener to prevent multiple triggers
                 audio.removeEventListener('timeupdate', handleFadeOut);
               }
             });
           }).catch(error => {
             console.warn('Autoplay was prevented.', error);
-            // Since playback is initiated via user interaction, this should rarely occur
           });
         }
       }
 
       /**
-       * Global click listener to start audio playback on the user's first click.
+       * Global click listener to start audio playback on first click.
        */
       document.addEventListener('click', () => {
         playWithFade();
@@ -433,8 +361,8 @@
 
           // Tooltip Texts
           const tooltips = {
-            'holdings': 'The central holding entity of the Redwood Hope Trust, guiding ventures that merge creativity, culture, and commerce to redefine societal impact through transformative innovation.',
-            'investments': 'A diversified investment arm funding creative ventures and philanthropy. Home to the Redwood Vision Fund, empowering innovation in creativity, technology, and psychology.',
+            'holdings': 'The central holding entity of the Film Music Trust, guiding ventures that merge creativity, culture, and commerce to redefine societal impact through transformative innovation.',
+            'investments': 'A diversified investment arm funding creative ventures and philanthropy. Home to the Film Music Vision Fund, empowering innovation in creativity, technology, and psychology.',
             'realestate': 'Oversees a portfolio of iconic properties, including cultural landmarks and serene living spaces, blending functionality with imaginative design.',
             'foundation': 'A philanthropic initiative fostering creativity and exploration. Provides grants across art, writing, and psychoanalysis to transform cultural landscapes.'
           };
@@ -445,10 +373,10 @@
           
           // Define Companies
           const companies = [
-            ['holdings', 'Redwood Holdings, Inc'],
-            ['investments', 'Redwood Investments, LLC'],
-            ['realestate', 'Redwood Real Estate Group'],
-            ['foundation', 'The Redwood Hope Foundation']
+            ['holdings', 'Film Music Holdings, Inc'],
+            ['investments', 'Film Music Investments, LLC'],
+            ['realestate', 'Film Music Real Estate Group'],
+            ['foundation', 'The Film Music Foundation']
           ];
 
           // Populate Company List with Tooltips
@@ -467,8 +395,6 @@
             companyList.style.opacity = '1';
           }, 50);
 
-          // Note: Audio playback is handled by the global click listener
-
         } else {
           // Move grid back to center
           document.body.classList.remove('grid-moved');
@@ -485,17 +411,6 @@
               }
             }, 2000);
           }
-
-          // Optionally, Pause the Audio When Grid Moves Back
-          // Uncomment the lines below if you want to pause audio when grid is centered
-
-          /*
-          if (!audio.paused) {
-            fadeOut(audio, 3000, () => {
-              audio.pause();
-            });
-          }
-          */
         }
       });
 
@@ -517,10 +432,8 @@
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       }
 
-      // Update viewport height on page load
+      // Update viewport height on page load and on window resize
       updateViewportHeight();
-
-      // Update viewport height on window resize
       window.addEventListener('resize', updateViewportHeight);
     </script>
   </body>
