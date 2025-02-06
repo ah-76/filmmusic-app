@@ -287,13 +287,14 @@
 /* The wrapper that contains the heading and list */
 .heading-wrapper {
   /* push the heading down so it doesn't overlap the arrow */
-  margin-top: 80px; /* or any spacing you prefer */
+  margin-top: 5rem; /* or any spacing you prefer */
 }
       /* (Optional) Style the Back button */
       .back-button {
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 9999;  
         background: none;
         border: none;
         color: #ccc;
@@ -542,12 +543,12 @@
         const data = topicContent[topicKey] || {};
         
         const leftColumnHTML = `
-  <!-- The BACK button goes here -->
+  <!-- Your arrow stays first in the column -->
   <button class="back-button" id="back-button">
     <span class="material-icons">keyboard_backspace</span>
   </button>
 
-  <!-- Wrap your heading + list in a separate div -->
+  <!-- Then the wrapper for heading and list -->
   <div class="heading-wrapper">
     <h2>${topicKey.toUpperCase()}</h2>
     ${
@@ -557,6 +558,7 @@
     }
   </div>
 `;
+
 
 
         const rightColumnHTML = data.content
