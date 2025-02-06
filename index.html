@@ -581,19 +581,21 @@
 
       // ----------------- LOGO (GRID) CLICK -----------------
       grid.addEventListener('click', () => {
-        if (!logoClicked) {
-          logoClicked = true;
-          // Fade out the logo
-          grid.style.transition = 'opacity 2s ease';
-          grid.style.opacity = '0';
-          setTimeout(() => {
-            grid.style.display = 'none';
-          }, 2000);
+  if (!logoClicked) {
+    logoClicked = true;
+    // Fade out the logo
+    grid.style.transition = 'opacity 2s ease';
+    grid.style.opacity = '0';
+    setTimeout(() => {
+      grid.style.display = 'none';
+      // Add a 1-second pause before showing the company list
+      setTimeout(() => {
+        showCompanyList();
+      }, 1000);
+    }, 2000);
+  }
+});
 
-          // After the grid is clicked/faded, show the list
-          showCompanyList();
-        }
-      });
 
       // ----------------- ANIMATE LETTERS RANDOMLY -----------------
       const letters = document.querySelectorAll('.letter');
