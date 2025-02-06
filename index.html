@@ -479,6 +479,9 @@
         const companyList = document.createElement('div');
         companyList.id = 'company-list';
 
+        // Set a quicker fade-in transition (override CSS)
+  companyList.style.transition = 'opacity 1s ease';
+
         // Populate
         companyList.innerHTML = companies
           .map(
