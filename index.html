@@ -272,9 +272,15 @@
         border-right: 1px solid rgba(220, 220, 220, 0.3);
         padding-right: 20px;
         position: relative;
+          font-family: 'Dosis', sans-serif; /* or any preferred font */
+  font-size: 20px; /* adjust as needed */
+        line-height: 1.5;
       }
       #topic-display .right-column {
         padding-left: 20px;
+          font-family: 'Dosis', sans-serif; /* or any preferred font */
+  font-size: 16px; /* adjust as needed */
+        line-height: 1.5;
       }
 
       /* (Optional) Style the Back button */
@@ -285,7 +291,7 @@
         background: none;
         border: none;
         color: #ccc;
-        font-size: 1.3rem;
+        font-size: 3rem;
         cursor: pointer;
         padding: 0.2em 0.5em;
       }
@@ -580,21 +586,20 @@
       }
 
       // ----------------- LOGO (GRID) CLICK -----------------
-      grid.addEventListener('click', () => {
-  if (!logoClicked) {
-    logoClicked = true;
-    // Fade out the logo
-    grid.style.transition = 'opacity 2s ease';
-    grid.style.opacity = '0';
-    setTimeout(() => {
-      grid.style.display = 'none';
-      // Add a 1-second pause before showing the company list
-      setTimeout(() => {
-        showCompanyList();
-      }, 1000);
-    }, 2000);
-  }
-});
+    grid.addEventListener('click', () => {
+        if (!logoClicked) {
+          logoClicked = true;
+          // Fade out the logo
+          grid.style.transition = 'opacity 2s ease';
+          grid.style.opacity = '0';
+          setTimeout(() => {
+            grid.style.display = 'none';
+          }, 2000);
+
+          // After the grid is clicked/faded, show the list
+          showCompanyList();
+        }
+      });
 
 
       // ----------------- ANIMATE LETTERS RANDOMLY -----------------
