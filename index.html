@@ -76,7 +76,6 @@
         text-align: center;
         transition: opacity 2s ease;
          
-
         /* Prevent text selection */
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -133,14 +132,14 @@
       .music-i { grid-column: 4; grid-row: 4; color: rgba(118, 93, 105, 0.8); }
       .music-c { grid-column: 4; grid-row: 5; color: rgba(118, 93, 105, 0.8); }
 
-      /* Topics List Styling ( ) */
+      /* Topics List Styling (Company List) */
       #company-list {
         position: fixed;
         left: 50px; /* 50px from the left edge */
         margin-top: 50px; 
         text-align: left;
         font-size: 32px;
-        color: rgba(220, 220, 220, 0.9);
+        color: rgba(144, 238, 144, 0.7);
         opacity: 0;
         transition: opacity 3s ease 1.5s;
         z-index: 1;
@@ -212,6 +211,35 @@
         visibility: visible;
       }
 
+      /* Two-Column Layout for Topic Display */
+      #topic-display {
+        position: fixed;
+        top: 50px;
+        left: 50px;
+        right: 50px;
+        bottom: 50px;
+        display: grid;
+        grid-template-columns: 1fr 3fr; /* Left column: 1/4, Right column: 3/4 */
+        gap: 20px;
+        background: rgba(17, 17, 17, 0.95);
+        color: rgba(220, 220, 220, 0.9);
+        padding: 20px;
+        border-radius: 10px;
+        opacity: 0;
+        transition: opacity 2s ease;
+        overflow-y: auto;
+        z-index: 1;
+      }
+
+      #topic-display .left-column {
+        border-right: 1px solid rgba(220, 220, 220, 0.3);
+        padding-right: 20px;
+      }
+
+      #topic-display .right-column {
+        padding-left: 20px;
+      }
+
       /* Mobile Responsiveness */
       @media (max-width: 768px) {
         .grid {
@@ -242,14 +270,13 @@
 
     <!-- Logo Layout in a Grid -->
     <div class="grid">
-      <!-- Horizontal FILM Letters (row 2) -->
+      <!-- Horizontal FILM Letters -->
       <div class="letter film-f">F</div>
       <div class="letter film-i">I</div>
       <div class="letter film-l">L</div>
       <div class="letter film-m">M</div>
       
-      <!-- Vertical MUSIC Letters (sharing column 4) -->
-      <!-- The "M" is already shown via FILM so we hide the vertical duplicate -->
+      <!-- Vertical MUSIC Letters (with duplicate "M" hidden) -->
       <div class="letter music-m">M</div>
       <div class="letter music-u">U</div>
       <div class="letter music-s">S</div>
@@ -334,11 +361,11 @@
       }, { once: true });
 
       /**
-       * Logo click: Fade out the logo in place and then show the topics list.
+       * Logo click: Fade out the logo and then show the topics list.
        */
       grid.addEventListener('click', () => {
         if (!logoClicked) {
-          // Fade out the logo (grid) in place
+          // Fade out the logo (grid)
           grid.style.transition = "opacity 2s ease";
           grid.style.opacity = "0";
           setTimeout(() => {
@@ -348,20 +375,20 @@
 
           // Tooltip Texts for the Topics List
           const tooltips = {
-            'ghostly': 'Witness the birth of cinema: a journey from terrifying novelty to structured experience, as live music transforms the shock of moving images.',
-            'scoring': 'The intimate partnership between composer & director - vision, workflow, communication, collaboration.',
-            'operatic': 'Discover how Star Wars revitalizes the power of Wagnerian cinema.',
-            'intertextual': 'Explore how Die Hard uses existing musical snippets, from Beethoven to pop, to celebrate a Hollywood villain.',
-            'xfiles': 'Learn how The X-Files uniquely imports cinematic techniques, melding sound-design with score into a single sonic tapestry.',
-            'heat': 'Survey a post-style musical landscape of polar opposites, loneliness, and obsession in Heat.',
-            'texture': 'Uncover American Beauty\'s radical, minimalist-imagistic mode of filmscoring.'
+            'ghostly': 'Witness the birth of cinema: a journey from terrifying novelty to structured experience, as live music transformed the shock of moving images.',
+            'scoring': 'The intimate partnership between composer & director - vision, workflows, communication, collaboration.',
+            'operatic': 'Discover how Star Wars revitalized the power of Wagnerian music-drama.',
+            'intertextual': 'Explore how Die Hard used musical existing snippets - from Beethoven to pop songs - to celebrate an anti-hero.',
+            'xfiles': 'Learn how The X-Files uniquely imported cinematic techniques, melding sound-design with score into a single tapestry.',
+            'heat': 'Survey the postmodern musical landscape of polar opposites, loneliness, and obsession in Heat.',
+            'texture': 'Uncover how American Beauty created a radically new, minimalist-imagistic mode of filmscoring.'
           };
 
           // Create Topics List (Company List)
           companyList = document.createElement('div');
           companyList.id = 'company-list';
           
-          // Define Topics (Companies)
+          // Define Topics (Companies) with a key and display name
           const companies = [
             ['ghostly', 'Ghostly Beginnings'],
             ['scoring', 'Vision & Score: Composer & Director'],
@@ -372,23 +399,113 @@
             ['texture', 'Suspended Textures: American Beauty']
           ];
 
-          // Populate Topics List with Tooltips
+          // Populate Topics List with Tooltips and include a data attribute for each topic key
           companyList.innerHTML = companies.map(([key, name]) => `
-            <div class="tooltip-container">
+            <div class="tooltip-container" data-topic="${key}">
               <div>${name}</div>
               <span class="tooltip">${tooltips[key]}</span>
             </div>
           `).join('<br><br>');
 
-          // Append the Topics List to the Body
+          // Append the Topics List to the Body and fade it in
           document.body.appendChild(companyList);
-
-          // Trigger Fade-In for the Topics List
           setTimeout(() => {
             companyList.style.opacity = '1';
           }, 50);
+
+          // Add click event listeners for each topic item
+          const topicItems = companyList.querySelectorAll('.tooltip-container');
+          topicItems.forEach(item => {
+            item.addEventListener('click', () => {
+              const topicKey = item.getAttribute('data-topic');
+              // Fade out the companyList
+              companyList.style.transition = "opacity 2s ease";
+              companyList.style.opacity = "0";
+              setTimeout(() => {
+                companyList.remove();
+              }, 2000);
+
+              // Show the selected topic using a two-column layout
+              showTopicDisplay(topicKey);
+            });
+          });
         }
       });
+
+      /**
+       * Define content for each topic. You can extend these objects with additional HTML, subheadings, etc.
+       */
+      const topicContent = {
+        'ghostly': {
+          subheadings: ['Background', 'Key Moments', 'Influence'],
+          content: `<p><strong>Ghostly Beginnings:</strong> Witness the birth of cinema as live music transformed moving images into a thrilling experience.</p>`
+        },
+        'scoring': {
+          subheadings: ['Collaboration', 'Workflow', 'Innovation'],
+          content: `<p><strong>Vision & Score:</strong> Explore the intimate collaboration between composer and director, and how their synergy creates unforgettable film moments.</p>`
+        },
+        'operatic': {
+          subheadings: ['Dramatic Themes', 'Musical Influences'],
+          content: `<p><strong>Operatic Cinema:</strong> Discover how the epic spirit of Wagnerian drama found a new home in cinematic storytelling through films like Star Wars.</p>`
+        },
+        'intertextual': {
+          subheadings: ['Cultural References', 'Subversion'],
+          content: `<p><strong>Playful Subversion:</strong> Delve into the use of pre-existing musical snippets and cultural references that enrich films like Die Hard.</p>`
+        },
+        'xfiles': {
+          subheadings: ['Mystery', 'Atmosphere'],
+          content: `<p><strong>Cinematic Series:</strong> Learn how The X-Files fused sound-design and scoring to create an otherworldly atmosphere.</p>`
+        },
+        'heat': {
+          subheadings: ['Urban Tension', 'Psychological Depth'],
+          content: `<p><strong>Urban Obsession:</strong> Analyze the film Heat and its postmodern take on loneliness and obsession through music.</p>`
+        },
+        'texture': {
+          subheadings: ['Minimalism', 'Imagery'],
+          content: `<p><strong>Suspended Textures:</strong> Uncover the minimalist and imagistic techniques used in American Beauty to shape its unique musical narrative.</p>`
+        }
+      };
+
+      /**
+       * Function to display the selected topic in a 2-column layout.
+       */
+      function showTopicDisplay(topicKey) {
+        // Create the container for topic display
+        const topicDisplay = document.createElement('div');
+        topicDisplay.id = 'topic-display';
+
+        // Retrieve the content for the chosen topic
+        const contentData = topicContent[topicKey];
+
+        // Build the left column HTML (subheadings) and right column HTML (detailed content)
+        let leftColumnHTML = `<h2>${topicKey.toUpperCase()}</h2>`;
+        if (contentData && contentData.subheadings) {
+          leftColumnHTML += '<ul>';
+          contentData.subheadings.forEach(sub => {
+            leftColumnHTML += `<li>${sub}</li>`;
+          });
+          leftColumnHTML += '</ul>';
+        } else {
+          leftColumnHTML += '<p>No subheadings available.</p>';
+        }
+
+        let rightColumnHTML = contentData && contentData.content ? contentData.content : '<p>No content available.</p>';
+
+        topicDisplay.innerHTML = `
+          <div class="left-column">
+            ${leftColumnHTML}
+          </div>
+          <div class="right-column">
+            ${rightColumnHTML}
+          </div>
+        `;
+
+        // Append the topic display to the body and fade it in
+        document.body.appendChild(topicDisplay);
+        setTimeout(() => {
+          topicDisplay.style.opacity = '1';
+        }, 50);
+      }
 
       /**
        * Set random animation delays for grid letters.
