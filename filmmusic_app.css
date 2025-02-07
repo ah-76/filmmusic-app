@@ -1,8 +1,6 @@
- <style>
-
       :root {
-  --accent-color: rgba(46, 204, 113, 0.5);
-      }
+      --accent-color: rgba(46, 204, 113, 0.5);
+       }
       
       /* Reset and Box-Sizing */
       html,
@@ -462,4 +460,3 @@
           -webkit-tap-highlight-color: transparent;
         }
       }
-    </style>
