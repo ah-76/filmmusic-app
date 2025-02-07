@@ -1,4 +1,9 @@
  <style>
+
+      :root {
+  --accent-color: rgba(46, 204, 113, 0.8);
+      }
+      
       /* Reset and Box-Sizing */
       html,
       body {
@@ -139,22 +144,22 @@
       .music-u {
         grid-column: 4;
         grid-row: 2;
-        color: rgba(118, 93, 105, 0.8);
+        color: rgba(--accent-color);
       }
       .music-s {
         grid-column: 4;
         grid-row: 3;
-        color: rgba(118, 93, 105, 0.8);
+        color: rgba(--accent-color);
       }
       .music-i {
         grid-column: 4;
         grid-row: 4;
-        color: rgba(118, 93, 105, 0.8);
+        color: rgba(--accent-color);
       }
       .music-c {
         grid-column: 4;
         grid-row: 5;
-        color: rgba(118, 93, 105, 0.8);
+        color: rgba(--accent-color);
       }
 
       /* Topics List Styling (Company List) */
@@ -185,7 +190,7 @@
 
 /* On hover, change the text color to the accent color */
 #company-list > div:hover {
-  color: rgba(118, 93, 105, 0.8);
+  color: rgba(--accent-color);
 }
 
 
@@ -298,7 +303,7 @@
 #topic-display .right-column h5,
 #topic-display .right-column h6 {
   font-family: 'Dosis', sans-serif;
-  color: rgba(118,93,105,0.8);
+  color: rgba(--accent-color);
   margin: 1rem 0 0.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -347,7 +352,7 @@
 }
 
 #topic-display .right-column ul li::marker {
-    color: rgba(118,93,105,0.8); /* Color only the bullet */
+    color: rgba(--accent-color); /* Color only the bullet */
 }
 
 
@@ -394,7 +399,7 @@
 
 /* Link Styling: accent links with your muted tone */
 #topic-display .right-column a {
-  color: rgba(118,93,105,0.8);
+  color: rgba(--accent-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -419,7 +424,7 @@
       .back-button { 
         background: none;
         border: none;
-        color: rgba(118, 93, 105, 0.8);
+        color: rgba(--accent-color);
         font-size: 3rem;
         cursor: pointer;
       }
