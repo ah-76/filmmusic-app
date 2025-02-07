@@ -179,7 +179,7 @@
         font-size: 32px;
         color: rgba(220,220,220,0.9);
         opacity: 0;
-        transition: opacity 3s ease 1.5s;
+        transition: opacity 3s ease;
         z-index: 1;
 
         /* Prevent text selection */
@@ -493,12 +493,10 @@ const topicContent = {
 function showCompanyList() {
   const companyList = document.createElement('div');
   companyList.id = 'company-list';
-  
-  // Start with opacity 0
-  companyList.style.opacity = '0';
+
   
   // Set transition consistently
-  companyList.style.transition = 'opacity 2s ease';
+  companyList.style.transition = 'opacity 3s ease';
   
   companyList.innerHTML = companies
     .map(
@@ -531,7 +529,7 @@ function showCompanyList() {
       companyList.style.opacity = '0';
       
       // Wait for fade out to complete before removing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 3000));
       companyList.remove();
       
       // Show topic display after company list is fully gone
@@ -545,8 +543,8 @@ async function showTopicDisplay(topicKey) {
   const topicDisplay = document.createElement('div');
   topicDisplay.id = 'topic-display';
   
-  // Start with opacity 0
-  topicDisplay.style.opacity = '0';
+  topicDisplay.style.transition = 'opacity 3s ease';  // Match other transitions
+
   
   const data = topicContent[topicKey] || {};
   
@@ -595,7 +593,7 @@ async function showTopicDisplay(topicKey) {
     topicDisplay.style.opacity = '0';
     
     // Wait for fade out to complete
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 3000));
     topicDisplay.remove();
     
     // Show company list after topic display is fully gone
@@ -608,7 +606,7 @@ async function showTopicDisplay(topicKey) {
   if (!logoClicked) {
     logoClicked = true;
     // Fade out the logo
-    grid.style.transition = 'opacity 2s ease';
+    grid.style.transition = 'opacity 3s ease';
     grid.style.opacity = '0';
 
     // After 2s, hide the grid
@@ -620,7 +618,7 @@ async function showTopicDisplay(topicKey) {
         showCompanyList();
       }, 1000);
 
-    }, 2000);
+    }, 3000);
   }
 });
 
