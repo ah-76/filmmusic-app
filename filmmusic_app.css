@@ -280,6 +280,13 @@
         overflow-y: auto;
       }
 
+#topic-display .left-column h2 {
+  color: rgba(160,160,160,0.8);  /* or any color of your choice */
+  /* You can also add font-size, letter-spacing, etc. */
+	letter-spacing: 2px;
+}
+
+
 
       
       /* start of right column styling */
