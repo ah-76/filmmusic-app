@@ -309,10 +309,13 @@
 
 /* Paragraph styling for consistent spacing */
 #topic-display .right-column p {
-  width: 75%;
-	margin: 0.5rem 0;
+  width: 80%;
+  margin: 0.5rem 0;
   line-height: 1.6;
-    color: rgba(220,220,220,0.9);
+  color: rgba(220,220,220,0.9);
+  background-color: rgba(220, 220, 220, 0.1);
+  padding: 10px;
+  border-radius: 5px;
 }
 
  #topic-display .right-column ul {
@@ -321,6 +324,7 @@
 
 #topic-display .right-column ul li {
     color: rgba(220,220,220,0.9); /* Keep the text color unchanged */
+	width: 90%;
 }
 
 #topic-display .right-column ul li:not(:last-child) {
@@ -335,7 +339,7 @@
 
 /* Table Styling */
 #topic-display .right-column table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   margin: 1rem 0;
   font-size: 0.95em;
