@@ -407,7 +407,7 @@
 
 /* Link Styling: accent links with your muted tone */
 #topic-display .right-column a {
-  color: rgba(--accent-color);
+  color: var(--accent-color);
   text-decoration: none;
   transition: color 0.3s ease;
 }
