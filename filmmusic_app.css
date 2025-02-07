@@ -144,22 +144,22 @@
       .music-u {
         grid-column: 4;
         grid-row: 2;
-        color: rgba(--accent-color);
+        color: var(--accent-color);
       }
       .music-s {
         grid-column: 4;
         grid-row: 3;
-        color: rgba(--accent-color);
+        color: var(--accent-color);
       }
       .music-i {
         grid-column: 4;
         grid-row: 4;
-        color: rgba(--accent-color);
+        color: var(--accent-color);
       }
       .music-c {
         grid-column: 4;
         grid-row: 5;
-        color: rgba(--accent-color);
+        color: var(--accent-color);
       }
 
       /* Topics List Styling (Company List) */
@@ -190,7 +190,7 @@
 
 /* On hover, change the text color to the accent color */
 #company-list > div:hover {
-  color: rgba(--accent-color);
+  color: var(--accent-color);
 }
 
 
@@ -303,7 +303,7 @@
 #topic-display .right-column h5,
 #topic-display .right-column h6 {
   font-family: 'Dosis', sans-serif;
-  color: rgba(--accent-color);
+  color: var(--accent-color);
   margin: 1rem 0 0.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -353,7 +353,7 @@
 }
 
 #topic-display .right-column ul li::marker {
-    color: rgba(--accent-color); /* Color only the bullet */
+    color: var(--accent-color); /* Color only the bullet */
 }
 
 
@@ -425,7 +425,7 @@
       .back-button { 
         background: none;
         border: none;
-        color: rgba(--accent-color);
+        color: var(--accent-color);
         font-size: 3rem;
         cursor: pointer;
       }
