@@ -383,38 +383,31 @@
       const topicContent = {
         ghostly: {
           subheadings: ['Background', 'Key Moments', 'Influence'],
-          content: `<p><strong>Ghostly Beginnings</strong><p> 
-            Witness the birth of cinema as live music transformed moving images into a thrilling experience.</p>`
+          file: 'ghostly.html'
         },
         scoring: {
           subheadings: ['Collaboration', 'Workflow', 'Innovation'],
-          content: `<p><strong>Vision & Score</strong><p> 
-            Explore the intimate collaboration between composer and director, and how their synergy creates unforgettable film moments.</p>`
-        },
+                file: 'scoring.html'
+  },
         operatic: {
           subheadings: ['Dramatic Themes', 'Musical Influences'],
-          content: `<p><strong>Operatic Cinema</strong><p>
-            Discover how the epic spirit of Wagnerian drama found a new home in cinematic storytelling through films like Star Wars.</p>`
+    file: 'operatic.html'
         },
         intertextual: {
           subheadings: ['Cultural References', 'Subversion'],
-          content: `<p><strong>Playful Subversion</strong><p>
-            Delve into the use of pre-existing musical snippets and cultural references that enrich films like Die Hard.</p>`
+    file: 'intertextual.html'
         },
         xfiles: {
           subheadings: ['Mystery', 'Atmosphere'],
-          content: `<p><strong>Cinematic Series</strong><p>
-            Learn how The X-Files fused sound-design and scoring to create an otherworldly atmosphere.</p>`
+    file: 'xfiles.html'
         },
         heat: {
           subheadings: ['Urban Tension', 'Psychological Depth'],
-          content: `<p><strong>Urban Obsession</strong><p> 
-            Analyze the film Heat and its postmodern take on loneliness and obsession through music.</p>`
+    file: 'heat.html'
         },
         texture: {
           subheadings: ['Minimalism', 'Imagery'],
-          content: `<p><strong>Suspended Textures</strong><br> 
-            Uncover the minimalist and imagistic techniques used in American Beauty to shape its unique musical narrative.</p>`
+    file: 'texture.html'
         }
       };
 
@@ -529,28 +522,89 @@
       }
 
       // ----------------- TOPIC DISPLAY (2-COLUMN) LOGIC -----------------
-      function showTopicDisplay(topicKey) {
-        const topicDisplay = document.createElement('div');
-        topicDisplay.id = 'topic-display';
+    function showTopicDisplay(topicKey) {
+  const topicDisplay = document.createElement('div');
+  topicDisplay.id = 'topic-display';
 
-        const data = topicContent[topicKey] || {};
-        
-        const leftColumnHTML = `
-  <!-- Your arrow stays first in the column -->
-  <button class="back-button" id="back-button">
-    <span class="material-icons">keyboard_backspace</span>
-  </button>
+  const data = topicContent[topicKey] || {};
 
-  <!-- Then the wrapper for heading and list -->
-  <div class="heading-wrapper">
-    <h2>${topicKey.toUpperCase()}</h2>
-    ${
-      data.subheadings
-        ? `<ul>${data.subheadings.map((sh) => `<li>${sh}</li>`).join('')}</ul>`
-        : '<p>No subheadings available.</p>'
-    }
-  </div>
-`;
+  // Build left column HTML with subheadings etc.
+  const leftColumnHTML = `
+    <!-- Back Button -->
+    <button class="back-button" id="back-button">
+      <span class="material-icons">keyboard_backspace</span>
+    </button>
+
+    <!-- Heading & Subheadings -->
+    <div class="heading-wrapper">
+      <h2>${topicKey.toUpperCase()}</h2>
+      ${
+        data.subheadings
+          ? `<ul>${data.subheadings.map((sh) => `<li>${sh}</li>`).join('')}</ul>`
+          : '<p>No subheadings available.</p>'
+      }
+    </div>
+  `;
+
+  // Start with a placeholder for the right column content
+  const rightColumnHTML = `<p>Loading content...</p>`;
+
+  // Build the 2-column layout
+  topicDisplay.innerHTML = `
+    <div class="left-column">
+      ${leftColumnHTML}
+    </div>
+    <div class="right-column">
+      ${rightColumnHTML}
+    </div>
+  `;
+
+  // Add the layout to the DOM
+  document.body.appendChild(topicDisplay);
+
+  // Fade in the topic display (as before)
+  requestAnimationFrame(() => {
+    topicDisplay.style.opacity = '1';
+  });
+
+  // --- Load External HTML Content ---
+  const rightColumnEl = topicDisplay.querySelector('.right-column');
+  if (data.file) {
+    fetch(data.file)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then((htmlContent) => {
+        // Update the right column with the loaded HTML
+        rightColumnEl.innerHTML = htmlContent;
+      })
+      .catch((err) => {
+        console.error('Error loading content from file:', err);
+        rightColumnEl.innerHTML = '<p>Error loading content.</p>';
+      });
+  } else if (data.content) {
+    // Fallback: if inline content is provided, use it
+    rightColumnEl.innerHTML = data.content;
+  } else {
+    rightColumnEl.innerHTML = '<p>No content available.</p>';
+  }
+
+  // ---- Add Event Listener for the Back Button ----
+  const backButton = topicDisplay.querySelector('#back-button');
+  backButton.addEventListener('click', () => {
+    // Fade out the 2-column container
+    topicDisplay.style.opacity = '0';
+    setTimeout(() => {
+      topicDisplay.remove();
+      // Re-show the company list after removing
+      showCompanyList();
+    }, 2000);
+  });
+}
+
 
 
 
