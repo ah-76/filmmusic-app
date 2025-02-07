@@ -178,6 +178,17 @@
         -webkit-tap-highlight-color: transparent;
       }
 
+/* Target the direct child divs within #company-list */
+#company-list > div {
+  transition: color 0.3s ease;
+}
+
+/* On hover, change the text color to the accent color */
+#company-list > div:hover {
+  color: rgba(118, 93, 105, 0.8);
+}
+
+
       /* Tooltip Container */
       .tooltip-container {
         position: static;
