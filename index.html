@@ -265,7 +265,7 @@
         padding: 20px;
         border-radius: 10px;
         opacity: 0;
-        transition: opacity 2s ease;
+        transition: opacity 3s ease;
         z-index: 2; /* higher than company-list (which was z-index:1) */
       }
       #topic-display .left-column {
@@ -616,7 +616,7 @@ async function showTopicDisplay(topicKey) {
       // Now wait 1s more before showing the list
       setTimeout(() => {
         showCompanyList();
-      }, 1000);
+      }, 500);
 
     }, 3000);
   }
