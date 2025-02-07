@@ -298,7 +298,7 @@
 #topic-display .right-column h4,
 #topic-display .right-column h5,
 #topic-display .right-column h6 {
-	margin-top: 20px;
+	margin-top: 30px;
 	}
 
 /* Optional: Give h2 a subtle underline for emphasis */
@@ -313,6 +313,10 @@
   line-height: 1.6;
     color: rgba(220,220,220,0.9);
 
+}
+
+#topic-display .right-column li {
+	color: rgba(118,93,105,0.8);
 }
 
 /* Table Styling */
