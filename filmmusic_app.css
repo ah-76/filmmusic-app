@@ -323,6 +323,10 @@
     color: rgba(220,220,220,0.9); /* Keep the text color unchanged */
 }
 
+#topic-display .right-column ul li:not(:last-child) {
+  margin-bottom: 15px;
+}
+
 #topic-display .right-column ul li::marker {
     color: rgba(118,93,105,0.8); /* Color only the bullet */
 }
