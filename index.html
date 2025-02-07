@@ -489,105 +489,119 @@ const topicContent = {
        * Create the company list in the DOM, fade it in, 
        * and attach click listeners for each item.
        */
-      function showCompanyList() {
-        // Create company-list container
-        const companyList = document.createElement('div');
-        companyList.id = 'company-list';
+ // Modify the showCompanyList function - adjust timing and add proper transition handling
+function showCompanyList() {
+  const companyList = document.createElement('div');
+  companyList.id = 'company-list';
+  
+  // Start with opacity 0
+  companyList.style.opacity = '0';
+  
+  // Set transition consistently
+  companyList.style.transition = 'opacity 2s ease';
+  
+  companyList.innerHTML = companies
+    .map(
+      ([key, name]) => `
+        <div class="tooltip-container" data-topic="${key}">
+          <div>${name}</div>
+          <span class="tooltip">${tooltips[key]}</span>
+        </div>
+      `
+    )
+    .join('<br><br>');
 
-        // Set a quicker fade-in transition (override CSS)
-        companyList.style.transition = 'opacity 2s ease';
+  document.body.appendChild(companyList);
 
-        // Populate
-        companyList.innerHTML = companies
-          .map(
-            ([key, name]) => `
-            <div class="tooltip-container" data-topic="${key}">
-              <div>${name}</div>
-              <span class="tooltip">${tooltips[key]}</span>
-            </div>
-          `
-          )
-          .join('<br><br>');
+  // Force reflow before starting transition
+  companyList.offsetHeight;
 
-        // Add to body
-        document.body.appendChild(companyList);
+  // Fade in
+  requestAnimationFrame(() => {
+    companyList.style.opacity = '1';
+  });
 
-        // Fade in
-        requestAnimationFrame(() => {
-          companyList.style.opacity = '1';
-        });
+  // Attach click listeners with improved transition handling
+  const topicItems = companyList.querySelectorAll('.tooltip-container');
+  topicItems.forEach((item) => {
+    item.addEventListener('click', async () => {
+      const topicKey = item.getAttribute('data-topic');
+      
+      // Start fade out
+      companyList.style.opacity = '0';
+      
+      // Wait for fade out to complete before removing
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      companyList.remove();
+      
+      // Show topic display after company list is fully gone
+      await showTopicDisplay(topicKey);
+    });
+  });
+}
 
-        // Attach item click listeners
-        const topicItems = companyList.querySelectorAll('.tooltip-container');
-        topicItems.forEach((item) => {
-          item.addEventListener('click', async () => {
-            const topicKey = item.getAttribute('data-topic');
-            // Fade out the companyList
-            companyList.style.transition = 'opacity 2s ease';
-            companyList.style.opacity = '0';
-            setTimeout(() => {
-              companyList.remove();
-            }, 2000);
-
-            // Show the selected topic using a two-column layout
-            await showTopicDisplay(topicKey);
-          });
-        });
+// Modify the showTopicDisplay function for better transition handling
+async function showTopicDisplay(topicKey) {
+  const topicDisplay = document.createElement('div');
+  topicDisplay.id = 'topic-display';
+  
+  // Start with opacity 0
+  topicDisplay.style.opacity = '0';
+  
+  const data = topicContent[topicKey] || {};
+  
+  const leftColumnHTML = `
+    <button class="back-button" id="back-button">
+      <span class="material-icons">keyboard_backspace</span>
+    </button>
+    <div class="heading-wrapper">
+      <h2>${topicKey.toUpperCase()}</h2>
+      ${
+        data.subheadings
+          ? `<ul>${data.subheadings.map((sh) => `<li>${sh}</li>`).join('')}</ul>`
+          : '<p>No subheadings available.</p>'
       }
+    </div>
+  `;
 
-      // ----------------- TOPIC DISPLAY (2-COLUMN) LOGIC -----------------
-      async function showTopicDisplay(topicKey) {
-        const topicDisplay = document.createElement('div');
-        topicDisplay.id = 'topic-display';
+  // Load content
+  const rightColumnContent = await loadTopicContent(topicKey);
 
-        const data = topicContent[topicKey] || {};
-        
-        const leftColumnHTML = `
-          <button class="back-button" id="back-button">
-            <span class="material-icons">keyboard_backspace</span>
-          </button>
+  // Build layout
+  topicDisplay.innerHTML = `
+    <div class="left-column">
+      ${leftColumnHTML}
+    </div>
+    <div class="right-column">
+      ${rightColumnContent}
+    </div>
+  `;
 
-          <div class="heading-wrapper">
-            <h2>${topicKey.toUpperCase()}</h2>
-            ${
-              data.subheadings
-                ? `<ul>${data.subheadings.map((sh) => `<li>${sh}</li>`).join('')}</ul>`
-                : '<p>No subheadings available.</p>'
-            }
-          </div>
-        `;
+  // Add to DOM
+  document.body.appendChild(topicDisplay);
 
-        // Load content from file
-        const rightColumnContent = await loadTopicContent(topicKey);
+  // Force reflow before starting transition
+  topicDisplay.offsetHeight;
 
-        // Build the 2-column layout
-        topicDisplay.innerHTML = `
-          <div class="left-column">
-            ${leftColumnHTML}
-          </div>
-          <div class="right-column">
-            ${rightColumnContent}
-          </div>
-        `;
+  // Fade in
+  requestAnimationFrame(() => {
+    topicDisplay.style.opacity = '1';
+  });
 
-        // Add to the DOM
-        document.body.appendChild(topicDisplay);
-
-        // Fade in
-        requestAnimationFrame(() => {
-          topicDisplay.style.opacity = '1';
-        });
-
-        // Add event listener for back button
-        const backButton = topicDisplay.querySelector('#back-button');
-        backButton.addEventListener('click', () => {
-          topicDisplay.style.opacity = '0';
-          setTimeout(() => {
-            topicDisplay.remove();
-            showCompanyList();
-          }, 2000);
-        });
-      }
+  // Back button with improved transition handling
+  const backButton = topicDisplay.querySelector('#back-button');
+  backButton.addEventListener('click', async () => {
+    // Start fade out
+    topicDisplay.style.opacity = '0';
+    
+    // Wait for fade out to complete
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    topicDisplay.remove();
+    
+    // Show company list after topic display is fully gone
+    showCompanyList();
+  });
+}
 
       // ----------------- LOGO (GRID) CLICK -----------------
       grid.addEventListener('click', () => {
