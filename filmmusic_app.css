@@ -315,9 +315,20 @@
 
 }
 
-#topic-display .right-column li {
-	color: rgba(118,93,105,0.8);
+#topic-display .right-column ul li {
+    color: rgba(220,220,220,0.9); /* Ensure text remains the default color */
+    position: relative;
+    padding-left: 1.2rem; /* Adjust for bullet spacing */
 }
+
+#topic-display .right-column ul li::before {
+    content: "•"; /* Custom bullet */
+    color: rgba(118,93,105,0.8); /* Accented color for the bullet */
+    position: absolute;
+    left: 0;
+    font-size: 1.2em; /* Match the size of the original bullet */
+}
+
 
 /* Table Styling */
 #topic-display .right-column table {
