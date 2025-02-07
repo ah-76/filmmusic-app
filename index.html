@@ -604,20 +604,26 @@ async function showTopicDisplay(topicKey) {
 }
 
       // ----------------- LOGO (GRID) CLICK -----------------
-      grid.addEventListener('click', () => {
-        if (!logoClicked) {
-          logoClicked = true;
-          // Fade out the logo
-          grid.style.transition = 'opacity 2s ease';
-          grid.style.opacity = '0';
-          setTimeout(() => {
-            grid.style.display = 'none';
-          }, 2000);
+     grid.addEventListener('click', () => {
+  if (!logoClicked) {
+    logoClicked = true;
+    // Fade out the logo
+    grid.style.transition = 'opacity 2s ease';
+    grid.style.opacity = '0';
 
-          // After the grid is clicked/faded, show the list
-          showCompanyList();
-        }
-      });
+    // After 2s, hide the grid
+    setTimeout(() => {
+      grid.style.display = 'none';
+
+      // Now wait 1s more before showing the list
+      setTimeout(() => {
+        showCompanyList();
+      }, 1000);
+
+    }, 2000);
+  }
+});
+
 
       // ----------------- ANIMATE LETTERS RANDOMLY -----------------
       const letters = document.querySelectorAll('.letter');
