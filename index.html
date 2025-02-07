@@ -179,7 +179,7 @@
         font-size: 32px;
         color: rgba(220,220,220,0.9);
         opacity: 0;
-        transition: opacity 3s ease;
+        transition: opacity 3s ease-out;
         z-index: 1;
 
         /* Prevent text selection */
@@ -265,7 +265,7 @@
         padding: 20px;
         border-radius: 10px;
         opacity: 0;
-        transition: opacity 3s ease;
+        transition: opacity 3s ease-out;
         z-index: 2; /* higher than company-list (which was z-index:1) */
       }
       #topic-display .left-column {
@@ -496,7 +496,7 @@ function showCompanyList() {
 
   
   // Set transition consistently
-  companyList.style.transition = 'opacity 3s ease';
+  companyList.style.transition = 'opacity 3s ease-out';
   
   companyList.innerHTML = companies
     .map(
@@ -543,7 +543,7 @@ async function showTopicDisplay(topicKey) {
   const topicDisplay = document.createElement('div');
   topicDisplay.id = 'topic-display';
   
-  topicDisplay.style.transition = 'opacity 3s ease';  // Match other transitions
+  topicDisplay.style.transition = 'opacity 3s ease-out';  // Match other transitions
 
   
   const data = topicContent[topicKey] || {};
@@ -606,7 +606,7 @@ async function showTopicDisplay(topicKey) {
   if (!logoClicked) {
     logoClicked = true;
     // Fade out the logo
-    grid.style.transition = 'opacity 3s ease';
+    grid.style.transition = 'opacity 3s ease-out';
     grid.style.opacity = '0';
 
     // After 2s, hide the grid
