@@ -321,12 +321,16 @@
 /* Paragraph styling for consistent spacing */
 #topic-display .right-column p {
   width: 80%;
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
+  margin-right: 0;
+  margin-bottom: 1rem;
+  margin-left: 0;
   line-height: 1.6;
   color: rgba(220,220,220,0.9);
   background-color: rgba(32,32,32, 0.5);
   padding: 10px;
   border-radius: 5px;
+	
 }
 
  #topic-display .right-column ul {
